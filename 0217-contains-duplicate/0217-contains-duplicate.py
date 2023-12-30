@@ -1,10 +1,10 @@
 class Solution(object):
     def containsDuplicate(self, nums):
-        saw = set()
+        saw = {}
         for i in nums:
-            if i in saw:
+            if i in saw and saw[i] >= 1:
                 return True 
             
-            saw.add(i)
+            saw[i] = saw.get(i,0) + 1
         
         return False
