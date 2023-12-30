@@ -6,9 +6,9 @@ class Solution(object):
             num = nums[i]
             
             if num in wife:
-                return [i, wife[num][1]]
+                return [i, wife[num]]
             
-            wife[target-num] = (num, i)
+            wife[target-num] = i
         
         
         
