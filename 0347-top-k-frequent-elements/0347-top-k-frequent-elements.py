@@ -7,11 +7,14 @@ class Solution(object):
         for num in nums:
             count_map[num] += 1
         
-        for key,val in count_map.items():
-            heappush(que, (-val, key))
+        bucket = [[] for _ in range(len(nums) + 1)]
+        
+        for key,value in count_map.items():
+            bucket[value].append(key)
         
         ans = []
-        for _ in range(k):
-            ans.append(heappop(que)[1])
-        
-        return ans
+        for i in range(len(nums), -1, -1):
+            if bucket[i] != []:
+                ans += bucket[i]
+            
+        return ans[:k]
