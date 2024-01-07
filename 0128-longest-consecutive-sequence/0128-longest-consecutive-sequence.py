@@ -4,6 +4,7 @@ class Solution(object):
         for num in nums:
             dic[num] = 1
         
+        ans = 0
         for num in nums:
             if num- 1 not in dic:
                 cnt = 1
@@ -13,10 +14,7 @@ class Solution(object):
                     tmp += 1
                 
                 dic[num] = cnt
-        
-        ans = 0
-        for k,v in dic.items():
-            ans = max(ans, v)
+                ans = max(ans, cnt)
         
         return ans
             
