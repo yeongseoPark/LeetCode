@@ -1,35 +1,38 @@
 class Solution(object):
     def threeSum(self, nums):
-        if len(nums) == 3:
-            if sum(nums) == 0:
-                return [nums]
+        res = set()
+        
+        # negative, positive, zero
+        n, p, z = [], [], []
+        for num in nums:
+            if num > 0:
+                p.append(num)
+            elif num < 0:
+                n.append(num)
             else:
-                return [] 
+                z.append(num)
         
-        nums.sort()
+        # negative, positive O(1) lookup
+        N, P = set(n), set(p)
         
-        ans = []
-        
-        for idx in range(len(nums)):
-            if idx > 0 and nums[idx] == nums[idx - 1]:
-                continue
-            
-            
-            lo = idx + 1
-            hi = len(nums) - 1
-            while lo < hi:
-                s = nums[idx] + nums[lo] + nums[hi]
-                if s == 0:
-                    ans.append([nums[idx], nums[lo], nums[hi]])
-                    lo += 1
-                    hi -= 1
-                    while lo < hi and nums[lo] == nums[lo - 1]:
-                        lo += 1
-                    while lo < hi and nums[hi] == nums[hi + 1]:
-                        hi -= 1
+        # 0이 리스트에 있는경우  
+        if z:
+            for num in P:
+                if -num in N:
+                    res.add((-1*num, 0, num))
+            if len(z) >= 3:
+                res.add((0,0,0))
                     
-                elif s < 0:
-                    lo += 1 
-                else:
-                    hi -= 1
-        return ans 
+        for i in range(len(n)):
+            for j in range(i+1, len(n)):
+                target = -1*(n[i]+n[j])
+                if target in P:
+                    res.add(tuple(sorted([n[i],n[j],target])))
+        
+        for i in range(len(p)):
+            for j in range(i+1, len(p)):
+                target = -1*(p[i]+p[j])
+                if target in N:
+                    res.add(tuple(sorted([p[i],p[j],target])))
+                
+        return res
